@@ -9,6 +9,10 @@
 import TheNavbar from './components/TheNavbar'
 
 export default {
+  props: [''],
+  setup() {
+
+  },
   components: {
     TheNavbar
   }

@@ -1,5 +1,5 @@
 <template>
-  <h1 v-if="!$store.state.tasks" class="text-white center">Задач пока нет</h1>
+  <h1 v-if="!$store.state.tasks.length" class="text-white center">Задач пока нет</h1>
   <template v-else>
     <h3 class="text-white">Всего активных задач: {{$store.getters.getActiveTasksAmount}}</h3>
     <template

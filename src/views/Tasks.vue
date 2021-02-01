@@ -1,15 +1,15 @@
 <template>
-  <h1 v-if="!createdTasks" class="text-white center" >Задач пока нет</h1>
+  <h1 v-if="!$store.state.tasks" class="text-white center">Задач пока нет</h1>
   <template v-else>
-    <h3 class="text-white">Всего активных задач: 0</h3>
+    <h3 class="text-white">Всего активных задач: {{$store.getters.getActiveTasksAmount}}</h3>
     <template
-      v-for="(task, idx) in createdTasks"
-      :key="idx"
+      v-for="task in $store.state.tasks"
+      :key="task.id"
     >
       <div class="card">
         <h2 class="card-title">
           {{ task.title }}
-          <AppStatus :type="'done'" />
+          <AppStatus :type="task.status" />
         </h2>
         <p>
           <strong>
@@ -18,7 +18,9 @@
             </small>
           </strong>
         </p>
-        <button class="btn primary">Посмотреть</button>
+        <router-link :to="'/task/' + task.id">
+          <button class="btn primary">Посмотреть</button>
+        </router-link>
       </div>
     </template>
   </template>
@@ -27,16 +29,7 @@
 <script>
 import AppStatus from '../components/AppStatus'
 
-
 export default {
-  setup() {
-
-    const createdTasks = JSON.parse(localStorage.getItem('tasks'))
-
-    return {
-      createdTasks
-    }
-  },
   components: {AppStatus}
 }
 </script>

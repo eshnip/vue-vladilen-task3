@@ -1,15 +1,5 @@
 <template>
-  <div class="alert">
+  <div class="alert primary">
     Вы только что добавили новую задачу
   </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style scoped>
-
-</style>

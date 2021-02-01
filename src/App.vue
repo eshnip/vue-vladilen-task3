@@ -7,11 +7,12 @@
 
 <script>
 import TheNavbar from './components/TheNavbar'
-
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 export default {
-  props: [''],
   setup() {
-
+    const store = useStore()
+    onMounted(() => store.commit('loadCurrentTasks'))
   },
   components: {
     TheNavbar

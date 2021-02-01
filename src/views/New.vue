@@ -2,7 +2,7 @@
 
   <AppNotice v-if="notice" />
 
-  <form class="card" @submit.prevent="createTask" ref="taskForm">
+  <form class="card" @submit.prevent="addNewTask" ref="taskForm">
     <h1>Создать новую задачу</h1>
     <div class="form-control">
       <label for="title">Название</label>
@@ -27,42 +27,32 @@
 
 
   </form>
-  <button class="danger" @click="$store.commit('add', 5)">add 5</button>
 </template>
 
 
 <script>
-import {ref, reactive, computed, watch, isRef} from 'vue'
+import {reactive, computed} from 'vue'
+import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 import {useNotice} from "../use/notice";
 import AppNotice from "../components/AppNotice";
 
 export default {
   setup() {
-
-
     const store = useStore()
-    const storeTasks = store.getters.tasks
-
-    console.log(storeTasks)
-
+    const router = useRouter()
 
     const task = reactive({
       title: '',
       date: '',
       description: '',
-      status: 'active',
-      timeStamp: Date.now()
+      id: '',
+      status: '',
     })
-
-
-
 
     const validateForm = computed(() => {
         return (task.title === '' || task.date === '' || task.description === '')
     })
-
-
 
     const {notice} = useNotice()
 
@@ -72,27 +62,23 @@ export default {
       task.description = ''
     }
 
-    function createTask() {
+    function addNewTask() {
+      task.id =  Date.now()
+      task.status = new Date(task.date).getTime() < task.id ? 'cancelled' : 'active'
+
+      store.commit('createTask', Object.assign({}, task))
+
       notice.value = true
-
-      storeTasks.push(task)
-
-      store.commit('increment')
-      console.log(store.getters.counter)
-
-      console.log(storeTasks)
-
-      localStorage.setItem('tasks', JSON.stringify(storeTasks))
-
       resetForm()
-
-      setTimeout(() => {notice.value = false}, 3000)
-
+      setTimeout(() => {
+        notice.value = false
+        router.push('/tasks')
+      }, 1500)
     }
 
     return {
       task,
-      createTask,
+      addNewTask,
       notice,
       validateForm
     }

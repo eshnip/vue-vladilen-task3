@@ -2,8 +2,6 @@
   <nav class="navbar">
     <h3>
       <router-link to="/">Freelance</router-link>
-      {{ $store.getters.counter }}
-      *{{ $store.getters.doubleCounter }}*
     </h3>
 
     <ul class="navbar-menu">
@@ -17,21 +15,3 @@
   </nav>
 </template>
 
-<script>
-import {computed} from "vue";
-import {useStore} from 'vuex'
-
-export default {
-  setup() {
-    const store = useStore()
-
-    return {
-
-    }
-  }
-}
-</script>
-
-<style scoped>
-
-</style>
